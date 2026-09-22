@@ -1,0 +1,56 @@
+{"timestamp":"00:00:01.417","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:00:17.465","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:00:17.520","source":"Browser","level":"ERROR","message":"TypeError: NetworkError when attempting to fetch resource."}
+{"timestamp":"00:00:17.521","source":"Server","level":"ERROR","message":"[browser] \"\\u001b[31mTypeError: NetworkError when attempting to fetch resource.\\u001b[39m\""}
+{"timestamp":"00:00:17.535","source":"Browser","level":"ERROR","message":"TypeError: NetworkError when attempting to fetch resource."}
+{"timestamp":"00:00:17.535","source":"Server","level":"ERROR","message":"[browser] \"\\u001b[31mTypeError: NetworkError when attempting to fetch resource.\\u001b[39m\""}
+{"timestamp":"00:00:28.539","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:00:30.679","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:00:30.813","source":"Browser","level":"ERROR","message":"TypeError: NetworkError when attempting to fetch resource."}
+{"timestamp":"00:00:30.814","source":"Server","level":"ERROR","message":"[browser] \"\\u001b[31mTypeError: NetworkError when attempting to fetch resource.\\u001b[39m\""}
+{"timestamp":"00:00:30.815","source":"Browser","level":"ERROR","message":"TypeError: NetworkError when attempting to fetch resource."}
+{"timestamp":"00:00:30.817","source":"Server","level":"ERROR","message":"[browser] \"\\u001b[31mTypeError: NetworkError when attempting to fetch resource.\\u001b[39m\""}
+{"timestamp":"00:02:58.568","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:02:58.689","source":"Browser","level":"ERROR","message":"TypeError: NetworkError when attempting to fetch resource."}
+{"timestamp":"00:02:58.690","source":"Server","level":"ERROR","message":"[browser] \"\\u001b[31mTypeError: NetworkError when attempting to fetch resource.\\u001b[39m\""}
+{"timestamp":"00:02:58.703","source":"Browser","level":"ERROR","message":"TypeError: NetworkError when attempting to fetch resource."}
+{"timestamp":"00:02:58.704","source":"Server","level":"ERROR","message":"[browser] \"\\u001b[31mTypeError: NetworkError when attempting to fetch resource.\\u001b[39m\""}
+{"timestamp":"00:05:30.030","source":"Browser","level":"ERROR","message":"TypeError: NetworkError when attempting to fetch resource."}
+{"timestamp":"00:05:30.031","source":"Server","level":"ERROR","message":"[browser] \"\\u001b[31mTypeError: NetworkError when attempting to fetch resource.\\u001b[39m\""}
+{"timestamp":"00:05:35.501","source":"Browser","level":"ERROR","message":"TypeError: NetworkError when attempting to fetch resource."}
+{"timestamp":"00:05:35.501","source":"Server","level":"ERROR","message":"[browser] \"\\u001b[31mTypeError: NetworkError when attempting to fetch resource.\\u001b[39m\""}
+{"timestamp":"00:05:36.861","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:05:36.992","source":"Browser","level":"ERROR","message":"TypeError: NetworkError when attempting to fetch resource."}
+{"timestamp":"00:05:36.992","source":"Server","level":"ERROR","message":"[browser] \"\\u001b[31mTypeError: NetworkError when attempting to fetch resource.\\u001b[39m\""}
+{"timestamp":"00:05:36.992","source":"Browser","level":"ERROR","message":"TypeError: NetworkError when attempting to fetch resource."}
+{"timestamp":"00:05:36.993","source":"Server","level":"ERROR","message":"[browser] \"\\u001b[31mTypeError: NetworkError when attempting to fetch resource.\\u001b[39m\""}
+{"timestamp":"00:05:38.930","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:05:39.044","source":"Browser","level":"ERROR","message":"TypeError: NetworkError when attempting to fetch resource."}
+{"timestamp":"00:05:39.044","source":"Server","level":"ERROR","message":"[browser] \"\\u001b[31mTypeError: NetworkError when attempting to fetch resource.\\u001b[39m\""}
+{"timestamp":"00:05:39.045","source":"Browser","level":"ERROR","message":"TypeError: NetworkError when attempting to fetch resource."}
+{"timestamp":"00:05:39.045","source":"Server","level":"ERROR","message":"[browser] \"\\u001b[31mTypeError: NetworkError when attempting to fetch resource.\\u001b[39m\""}
+{"timestamp":"00:05:42.915","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:05:43.013","source":"Browser","level":"ERROR","message":"TypeError: NetworkError when attempting to fetch resource."}
+{"timestamp":"00:05:43.014","source":"Server","level":"ERROR","message":"[browser] \"\\u001b[31mTypeError: NetworkError when attempting to fetch resource.\\u001b[39m\""}
+{"timestamp":"00:05:43.014","source":"Browser","level":"ERROR","message":"TypeError: NetworkError when attempting to fetch resource."}
+{"timestamp":"00:05:43.014","source":"Server","level":"ERROR","message":"[browser] \"\\u001b[31mTypeError: NetworkError when attempting to fetch resource.\\u001b[39m\""}
+{"timestamp":"00:05:45.100","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:05:45.198","source":"Browser","level":"ERROR","message":"TypeError: NetworkError when attempting to fetch resource."}
+{"timestamp":"00:05:45.198","source":"Server","level":"ERROR","message":"[browser] \"\\u001b[31mTypeError: NetworkError when attempting to fetch resource.\\u001b[39m\""}
+{"timestamp":"00:05:45.199","source":"Browser","level":"ERROR","message":"TypeError: NetworkError when attempting to fetch resource."}
+{"timestamp":"00:05:45.199","source":"Server","level":"ERROR","message":"[browser] \"\\u001b[31mTypeError: NetworkError when attempting to fetch resource.\\u001b[39m\""}
+{"timestamp":"00:05:46.278","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:05:46.400","source":"Browser","level":"ERROR","message":"TypeError: NetworkError when attempting to fetch resource."}
+{"timestamp":"00:05:46.401","source":"Server","level":"ERROR","message":"[browser] \"\\u001b[31mTypeError: NetworkError when attempting to fetch resource.\\u001b[39m\""}
+{"timestamp":"00:05:46.402","source":"Browser","level":"ERROR","message":"TypeError: NetworkError when attempting to fetch resource."}
+{"timestamp":"00:05:46.402","source":"Server","level":"ERROR","message":"[browser] \"\\u001b[31mTypeError: NetworkError when attempting to fetch resource.\\u001b[39m\""}
+{"timestamp":"00:10:58.485","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:11:09.053","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:11:09.398","source":"Browser","level":"ERROR","message":"Uncaught TypeError: product.price.toFixed is not a function\n    at CadastrarProdutoPage/<.children<.children<.children< (app/cadastrar-produto/page.tsx:168:76)\n    at CadastrarProdutoPage (app/cadastrar-produto/page.tsx:160:23)\n  \u001b[90m166 |\u001b[0m ...\n  \u001b[90m167 |\u001b[0m ...\u001b[32mlg font-bold mb-2\"\u001b[0m>{product.name}</h3>\n\u001b[31m\u001b[1m>\u001b[0m \u001b[90m168 |\u001b[0m ...\u001b[32mray-300 mb-1\"\u001b[0m>\u001b[33mPreço\u001b[0m: \u001b[33mR$\u001b[0m {product.price.toFixed(\u001b[35m2\u001b[0m)}</p>\n  \u001b[90m    |\u001b[0m                                          \u001b[31m\u001b[1m^\u001b[0m\n  \u001b[90m169 |\u001b[0m ...\u001b[32mray-300 mb-1\"\u001b[0m>\u001b[33mEstoque\u001b[0m: {product.stock}</p>\n  \u001b[90m170 |\u001b[0m ...\n  \u001b[90m171 |\u001b[0m ..."}
+{"timestamp":"00:11:09.399","source":"Server","level":"ERROR","message":"[browser] \"\\u001b[31mUncaught TypeError: product.price.toFixed is not a function\\u001b[39m\\n\\u001b[31m    at CadastrarProdutoPage/<.children<.children<.children< (app/cadastrar-produto/page.tsx:168:76)\\n    at CadastrarProdutoPage (app/cadastrar-produto/page.tsx:160:23)\\u001b[39m\\n  \\u001b[90m166 |\\u001b[0m ...\\n  \\u001b[90m167 |\\u001b[0m ...\\u001b[32mlg font-bold mb-2\\\"\\u001b[0m>{product.name}</h3>\\n\\u001b[31m\\u001b[1m>\\u001b[0m \\u001b[90m168 |\\u001b[0m ...\\u001b[32mray-300 mb-1\\\"\\u001b[0m>\\u001b[33mPreço\\u001b[0m: \\u001b[33mR$\\u001b[0m {product.price.toFixed(\\u001b[35m2\\u001b[0m)}</p>\\n  \\u001b[90m    |\\u001b[0m                                          \\u001b[31m\\u001b[1m^\\u001b[0m\\n  \\u001b[90m169 |\\u001b[0m ...\\u001b[32mray-300 mb-1\\\"\\u001b[0m>\\u001b[33mEstoque\\u001b[0m: {product.stock}</p>\\n  \\u001b[90m170 |\\u001b[0m ...\\n  \\u001b[90m171 |\\u001b[0m ...\""}
+{"timestamp":"00:12:22.540","source":"Server","level":"WARN","message":"⚠ Fast Refresh had to perform a full reload due to a runtime error."}
+{"timestamp":"00:12:22.549","source":"Server","level":"LOG","message":"✓ Compiled in 175ms"}
+{"timestamp":"00:12:22.840","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:13:26.918","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:13:29.722","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:13:31.771","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}

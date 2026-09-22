@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type Product = {
   id: number;
@@ -10,15 +10,44 @@ type Product = {
   image: string;
 };
 
+type CreateProductDTO = Omit<Product, 'id'>;
+
+function normalizeProduct(product: Product): Product {
+  return {
+    ...product,
+    price: Number(product.price),
+    stock: Number(product.stock),
+  };
+}
+
 export default function CadastrarProdutoPage() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [form, setForm] = useState<Omit<Product, 'id'>>({
+  const [form, setForm] = useState<CreateProductDTO>({
     name: '',
     price: 0,
     stock: 0,
     image: '',
   });
-  const [nextId, setNextId] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch products on mount
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const res = await fetch('http://localhost:3001/products');
+      if (!res.ok) throw new Error('Failed to fetch products');
+      const data: Product[] = await res.json();
+      setProducts(data.map(normalizeProduct));
+      setError(null);
+    } catch (err) {
+      console.error(err);
+      setError('Could not load products');
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type } = e.target;
@@ -28,21 +57,54 @@ export default function CadastrarProdutoPage() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // Basic validation
     if (!form.name || form.price <= 0 || form.stock < 0 || !form.image) {
       alert('Preencha todos os campos corretamente');
       return;
     }
-    const newProduct: Product = { ...form, id: nextId };
-    setProducts(prev => [...prev, newProduct]);
-    setNextId(prev => prev + 1);
-    setForm({ name: '', price: 0, stock: 0, image: '' });
+
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch('http://localhost:3001/products', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form),
+      });
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        throw new Error(errorText || 'Failed to create product');
+      }
+
+      const createdProduct: Product = normalizeProduct(await res.json());
+      // Add to local list (optimistic) or refetch
+      setProducts(prev => [...prev, createdProduct]);
+      // Reset form
+      setForm({ name: '', price: 0, stock: 0, image: '' });
+    } catch (err) {
+      console.error(err);
+      setError('Could not create product');
+      alert('Could not create product: ' + (err as Error).message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white p-6">
       <h1 className="text-3xl font-bold text-red-500 mb-6">Cadastrar Produto</h1>
+
+      {error && (
+        <div className="mb-4 p-3 bg-red-900/50 border border-red-600 rounded text-red-200">
+          {error}
+        </div>
+      )}
+
       <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4 bg-gray-800 p-6 rounded">
         <div>
           <label className="block mb-2">Nome do produto</label>
@@ -88,8 +150,14 @@ export default function CadastrarProdutoPage() {
             className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:ring-2 focus:ring-red-500"
           />
         </div>
-        <button type="submit" className="w-full bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">
-          Cadastrar Produto
+        <button
+          type="submit"
+          disabled={loading}
+          className={`w-full bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition ${
+            loading ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
+        >
+          {loading ? 'Cadastrando...' : 'Cadastrar Produto'}
         </button>
       </form>
 
