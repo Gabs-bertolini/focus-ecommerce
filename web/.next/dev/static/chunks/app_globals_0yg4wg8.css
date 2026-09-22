@@ -32,8 +32,11 @@
     --color-red-600: #e40014;
     --color-red-700: #bf000f;
     --color-red-900: #82181a;
+    --color-blue-500: #3080ff;
+    --color-blue-600: #155dfc;
     --color-gray-300: #d1d5dc;
     --color-gray-400: #99a1af;
+    --color-gray-500: #6a7282;
     --color-gray-600: #4a5565;
     --color-gray-700: #364153;
     --color-gray-800: #1e2939;
@@ -42,6 +45,7 @@
     --spacing: .25rem;
     --container-sm: 24rem;
     --container-md: 28rem;
+    --container-2xl: 42rem;
     --container-4xl: 56rem;
     --text-sm: .875rem;
     --text-sm--line-height: calc(1.25 / .875);
@@ -70,8 +74,11 @@
       --color-red-600: lab(48.4493% 77.4328 61.5452);
       --color-red-700: lab(40.4273% 67.2623 53.7441);
       --color-red-900: lab(28.5139% 44.5539 29.0463);
+      --color-blue-500: lab(54.1736% 13.3369 -74.6839);
+      --color-blue-600: lab(44.0605% 29.0279 -86.0352);
       --color-gray-300: lab(85.1236% -.612259 -3.7138);
       --color-gray-400: lab(65.9269% -.832707 -8.17473);
+      --color-gray-500: lab(47.7841% -.393182 -10.0268);
       --color-gray-600: lab(35.6337% -1.58697 -10.8425);
       --color-gray-700: lab(27.1134% -.956401 -12.3224);
       --color-gray-800: lab(16.1051% -1.18239 -11.7533);
@@ -366,6 +373,18 @@
     margin-inline: auto;
   }
 
+  .mt-2 {
+    margin-top: calc(var(--spacing) * 2);
+  }
+
+  .mt-4 {
+    margin-top: calc(var(--spacing) * 4);
+  }
+
+  .mt-6 {
+    margin-top: calc(var(--spacing) * 6);
+  }
+
   .mt-8 {
     margin-top: calc(var(--spacing) * 8);
   }
@@ -402,6 +421,10 @@
     display: grid;
   }
 
+  .h-16 {
+    height: calc(var(--spacing) * 16);
+  }
+
   .h-48 {
     height: calc(var(--spacing) * 48);
   }
@@ -410,8 +433,16 @@
     min-height: 100vh;
   }
 
+  .w-16 {
+    width: calc(var(--spacing) * 16);
+  }
+
   .w-full {
     width: 100%;
+  }
+
+  .max-w-2xl {
+    max-width: var(--container-2xl);
   }
 
   .max-w-4xl {
@@ -424,6 +455,14 @@
 
   .max-w-sm {
     max-width: var(--container-sm);
+  }
+
+  .flex-1 {
+    flex: 1;
+  }
+
+  .border-collapse {
+    border-collapse: collapse;
   }
 
   .cursor-not-allowed {
@@ -460,6 +499,18 @@
     margin-block-end: calc(calc(var(--spacing) * 4) * calc(1 - var(--tw-space-y-reverse)));
   }
 
+  :where(.space-x-2 > :not(:last-child)) {
+    --tw-space-x-reverse: 0;
+    margin-inline-start: calc(calc(var(--spacing) * 2) * var(--tw-space-x-reverse));
+    margin-inline-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-x-reverse)));
+  }
+
+  :where(.space-x-3 > :not(:last-child)) {
+    --tw-space-x-reverse: 0;
+    margin-inline-start: calc(calc(var(--spacing) * 3) * var(--tw-space-x-reverse));
+    margin-inline-end: calc(calc(var(--spacing) * 3) * calc(1 - var(--tw-space-x-reverse)));
+  }
+
   :where(.space-x-4 > :not(:last-child)) {
     --tw-space-x-reverse: 0;
     margin-inline-start: calc(calc(var(--spacing) * 4) * var(--tw-space-x-reverse));
@@ -473,6 +524,11 @@
   .border {
     border-style: var(--tw-border-style);
     border-width: 1px;
+  }
+
+  .border-t {
+    border-top-style: var(--tw-border-style);
+    border-top-width: 1px;
   }
 
   .border-gray-600 {
@@ -489,6 +545,14 @@
 
   .bg-black {
     background-color: var(--color-black);
+  }
+
+  .bg-blue-600 {
+    background-color: var(--color-blue-600);
+  }
+
+  .bg-gray-600 {
+    background-color: var(--color-gray-600);
   }
 
   .bg-gray-700 {
@@ -529,12 +593,20 @@
     padding: calc(var(--spacing) * 6);
   }
 
+  .px-3 {
+    padding-inline: calc(var(--spacing) * 3);
+  }
+
   .px-4 {
     padding-inline: calc(var(--spacing) * 4);
   }
 
   .px-6 {
     padding-inline: calc(var(--spacing) * 6);
+  }
+
+  .py-1 {
+    padding-block: var(--spacing);
   }
 
   .py-2 {
@@ -547,6 +619,14 @@
 
   .text-center {
     text-align: center;
+  }
+
+  .text-left {
+    text-align: left;
+  }
+
+  .text-right {
+    text-align: right;
   }
 
   .text-2xl {
@@ -619,6 +699,18 @@
   }
 
   @media (hover: hover) {
+    .hover\:bg-blue-500:hover {
+      background-color: var(--color-blue-500);
+    }
+
+    .hover\:bg-gray-500:hover {
+      background-color: var(--color-gray-500);
+    }
+
+    .hover\:bg-red-500:hover {
+      background-color: var(--color-red-500);
+    }
+
     .hover\:bg-red-700:hover {
       background-color: var(--color-red-700);
     }
