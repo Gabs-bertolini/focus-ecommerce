@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 type Product = {
   id: number;
@@ -11,7 +12,6 @@ type Product = {
 };
 
 type CreateProductDTO = Omit<Product, 'id'>;
-type UpdateProductDTO = Partial<Product>;
 
 function normalizeProduct(product: Product): Product {
   return {
@@ -22,6 +22,7 @@ function normalizeProduct(product: Product): Product {
 }
 
 export default function AdminProductsPage() {
+  const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
   const [form, setForm] = useState<CreateProductDTO>({
     name: '',
@@ -35,28 +36,28 @@ export default function AdminProductsPage() {
 
   // Fetch products on mount
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    const loadProducts = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/products`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        });
+        if (!res.ok) throw new Error('Failed to fetch products');
+        const data: Product[] = await res.json();
+        setProducts(data.map(normalizeProduct));
+        setError(null);
+      } catch (err) {
+        console.error(err);
+        setError('Could not load products');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const fetchProducts = async () => {
-    try {
-      setLoading(true);
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/products`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-      if (!res.ok) throw new Error('Failed to fetch products');
-      const data: Product[] = await res.json();
-      setProducts(data.map(normalizeProduct));
-      setError(null);
-    } catch (err) {
-      console.error(err);
-      setError('Could not load products');
-    } finally {
-      setLoading(false);
-    }
-  };
+    void loadProducts();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type } = e.target;
@@ -136,11 +137,30 @@ export default function AdminProductsPage() {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-      if (!res.ok) throw new Error('Failed to delete product');
+      if (!res.ok) {
+        let message = `Failed to delete product (${res.status})`;
+        try {
+          const errorData = await res.json();
+          message = Array.isArray(errorData.message)
+            ? errorData.message.join(', ')
+            : errorData.message || message;
+        } catch {
+          // Keep the status-based message when the API has no JSON response.
+        }
+
+        if (res.status === 401) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('role');
+          router.push('/login');
+          return;
+        }
+
+        throw new Error(message);
+      }
       setProducts(prev => prev.filter(p => p.id !== id));
     } catch (err) {
       console.error(err);
-      setError('Could not delete product');
+      setError(`Could not delete product: ${(err as Error).message}`);
     } finally {
       setLoading(false);
     }
