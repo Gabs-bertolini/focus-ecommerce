@@ -3,6 +3,7 @@
   "/admin/products/page": "app/admin/products/page.js",
   "/login/page": "app/login/page.js",
   "/page": "app/page.js",
+  "/register/page": "app/register/page.js",
   "/store/cart/page": "app/store/cart/page.js",
   "/store/page": "app/store/page.js"
 }

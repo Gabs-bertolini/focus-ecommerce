@@ -28,3 +28,11 @@
 {"timestamp":"00:19:49.334","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
 {"timestamp":"00:26:45.685","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
 {"timestamp":"00:26:47.627","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:42:20.967","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:42:28.024","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:44:18.899","source":"Server","level":"LOG","message":"✓ Compiled in 344ms"}
+{"timestamp":"00:44:38.692","source":"Server","level":"LOG","message":"✓ Compiled in 347ms"}
+{"timestamp":"00:52:30.679","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:52:33.149","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:52:50.175","source":"Browser","level":"ERROR","message":"Error: Password must be at least 6 characters long\n    at handleSubmit (app/register/page.tsx:28:15)\n    at form (unknown)\n    at RegisterPage (app/register/page.tsx:80:7)"}
+{"timestamp":"00:52:50.180","source":"Server","level":"ERROR","message":"[browser] \"\\u001b[31mError: Password must be at least 6 characters long\\u001b[39m\\n\\u001b[31m    at handleSubmit (app/register/page.tsx:28:15)\\n    at form (unknown)\\n    at RegisterPage (app/register/page.tsx:80:7)\\u001b[39m\""}

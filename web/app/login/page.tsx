@@ -90,7 +90,7 @@ export default function LoginPage() {
           {loading ? 'Entrando...' : 'Entrar'}
         </button>
         <p className="text-center text-sm text-gray-400">
-          Não tem conta? <a href="#" className="text-red-400 hover:underline">Cadastre-se</a>
+          Não tem conta? <a href="/register" className="text-red-400 hover:underline">Cadastre-se</a>
         </p>
       </form>
     </div>

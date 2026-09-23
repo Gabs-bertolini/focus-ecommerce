@@ -96,10 +96,10 @@ export default function CartPage() {
               </tbody>
               <tfoot>
                 <tr className="bg-gray-800">
-                  <td colSpan="3" className="p-4 text-right font-bold">
+                  <td colSpan={3} className="p-4 text-right font-bold">
                     Total:
                   </td>
-                  <td colSpan="2" className="p-4 text-left font-bold">
+                  <td colSpan={2} className="p-4 text-left font-bold">
                     R$ {total.toFixed(2)}
                   </td>
                 </tr>
