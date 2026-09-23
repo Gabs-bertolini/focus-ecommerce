@@ -33,21 +33,21 @@ export default function CadastrarProdutoPage() {
 
   // Fetch products on mount
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    const loadProducts = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/products`);
+        if (!res.ok) throw new Error('Failed to fetch products');
+        const data: Product[] = await res.json();
+        setProducts(data.map(normalizeProduct));
+        setError(null);
+      } catch (err) {
+        console.error(err);
+        setError('Could not load products');
+      }
+    };
 
-  const fetchProducts = async () => {
-    try {
-      const res = await fetch('http://localhost:3001/products');
-      if (!res.ok) throw new Error('Failed to fetch products');
-      const data: Product[] = await res.json();
-      setProducts(data.map(normalizeProduct));
-      setError(null);
-    } catch (err) {
-      console.error(err);
-      setError('Could not load products');
-    }
-  };
+    void loadProducts();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type } = e.target;
@@ -68,7 +68,7 @@ export default function CadastrarProdutoPage() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch('http://localhost:3001/products', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/products`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
