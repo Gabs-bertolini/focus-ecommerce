@@ -28,3 +28,10 @@
 {"timestamp":"00:07:44.230","source":"Browser","level":"ERROR","message":"TypeError: NetworkError when attempting to fetch resource."}
 {"timestamp":"00:07:44.231","source":"Server","level":"ERROR","message":"[browser] \"\\u001b[31mTypeError: NetworkError when attempting to fetch resource.\\u001b[39m\""}
 {"timestamp":"00:25:32.405","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:42:05.500","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:42:06.925","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:42:13.437","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:42:29.362","source":"Browser","level":"ERROR","message":"Error: Invalid email or password\n    at handleSubmit (app/login/page.tsx:27:15)"}
+{"timestamp":"00:42:29.363","source":"Server","level":"ERROR","message":"[browser] \"\\u001b[31mError: Invalid email or password\\u001b[39m\\n\\u001b[31m    at handleSubmit (app/login/page.tsx:27:15)\\u001b[39m\""}
+{"timestamp":"00:42:35.982","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:42:40.389","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
