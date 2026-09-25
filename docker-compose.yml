@@ -1,4 +1,12 @@
 services:
+  web: 
+    image: ghcr.io/gabs-bertolini/focus-web:latest
+    networks:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_URL: http://api:3001
+    ports:
+      - "3000:3000"
   api:
     image: ghcr.io/gabs-bertolini/focus-api:latest
     networks:

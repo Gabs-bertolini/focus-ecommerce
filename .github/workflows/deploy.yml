@@ -1,5 +1,5 @@
 
-name: Build & Push Focus API
+name: Build & Push Focus Images
 
 on:
   push:
@@ -8,11 +8,16 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: gabs-bertolini/focus-api
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: [api, web]
+
+    env:
+      IMAGE_NAME: gabs-bertolini/focus-${{ matrix.app }}
 
     permissions:
       contents: read
@@ -37,10 +42,10 @@ jobs:
             type=sha,format=long,prefix=sha-
             type=raw,value=dev
 
-      - name: Build and push Docker image
+      - name: Build and push ${{ matrix.app }} image
         uses: docker/build-push-action@v6
         with:
-          context: ./api
+          context: ./${{ matrix.app }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
