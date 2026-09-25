@@ -26,7 +26,7 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 ENV HOSTNAME=0.0.0.0
-ENV PORT=46464
+ENV PORT=3000
 
 COPY --from=production-dependencies /app/node_modules ./node_modules
 COPY --from=builder /app/.next ./.next
@@ -34,6 +34,6 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/next.config.ts ./next.config.ts
 COPY package.json ./package.json
 
-EXPOSE 45454
+EXPOSE 3000
 
 CMD ["npm", "start"]
