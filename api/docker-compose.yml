@@ -1,10 +1,6 @@
 services:
   api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: ecommerce-api
-    restart: unless-stopped
+    image: ghcr.io/gabs-bertolini/focus-api:latest
     networks:
       - backend
     environment:
