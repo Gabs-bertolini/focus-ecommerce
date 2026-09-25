@@ -38,9 +38,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            type=sha,format=long,prefix=sha-
-            type=raw,value=dev
+          tags: dev
 
       - name: Build and push ${{ matrix.app }} image
         uses: docker/build-push-action@v6
