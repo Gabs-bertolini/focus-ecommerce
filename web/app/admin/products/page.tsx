@@ -39,7 +39,7 @@ export default function AdminProductsPage() {
     const loadProducts = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/products`, {
+        const res = await fetch('/api/products', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
@@ -81,7 +81,7 @@ export default function AdminProductsPage() {
       let res;
       if (editingId !== null) {
         // Update
-        res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/products/${editingId}`, {
+        res = await fetch(`/api/products/${editingId}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ export default function AdminProductsPage() {
         });
       } else {
         // Create
-        res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/products`, {
+        res = await fetch('/api/products', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -131,7 +131,7 @@ export default function AdminProductsPage() {
     if (!window.confirm('Tem certeza que deseja excluir este produto?')) return;
     setLoading(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/products/${id}`, {
+      const res = await fetch(`/api/products/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
