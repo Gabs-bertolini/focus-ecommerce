@@ -10,7 +10,50 @@ env:
   REGISTRY: ghcr.io
 
 jobs:
+  test-api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: api/package-lock.json
+
+      - name: Install API dependencies
+        run: npm ci
+        working-directory: api
+
+      - name: Test API
+        run: npm test -- --runInBand
+        working-directory: api
+
+  test-web:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install web dependencies
+        run: npm ci
+        working-directory: web
+
+      - name: Test web
+        run: npm test
+        working-directory: web
+
   build-and-push:
+    needs: [test-api, test-web]
     runs-on: ubuntu-latest
     strategy:
       matrix:
