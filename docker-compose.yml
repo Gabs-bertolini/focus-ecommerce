@@ -1,14 +1,19 @@
 services:
   web:
     image: ghcr.io/gabs-bertolini/focus-web:dev
+    restart: unless-stopped
     networks:
       - backend
     environment:
       API_URL: http://api:3001
     ports:
       - "46464:3000"
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
   api:
     image: ghcr.io/gabs-bertolini/focus-api:dev
+    restart: unless-stopped
     networks:
       - backend
     environment:
@@ -28,6 +33,9 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
   postgres:
     image: postgres:15
     container_name: ecommerce-postgres
@@ -45,6 +53,18 @@ services:
       retries: 10
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  watchtower:
+    image: containrrr/watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      WATCHTOWER_LABEL_ENABLE: "true"
+      WATCHTOWER_POLL_INTERVAL: 60
+      WATCHTOWER_CLEANUP: "true"
+      WATCHTOWER_INCLUDE_RESTARTING: "true"
+    command: --label-enable
 
 networks:
   backend:
