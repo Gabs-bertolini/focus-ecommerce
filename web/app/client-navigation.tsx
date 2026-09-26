@@ -30,7 +30,7 @@ export default function ClientNavigation() {
     <nav className="bg-red-600 p-4">
       <div className="container mx-auto flex justify-between items-center">
         <Link href="/" className="text-xl font-bold text-white hover:underline">
-          Focus Ecommerce!!!
+          Focus Ecommerce
         </Link>
         <div className="space-x-4">
           <Link href="/" className="hover:text-red-200">
