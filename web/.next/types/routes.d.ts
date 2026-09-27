@@ -5,7 +5,7 @@ type AppRoutes = "/" | "/admin" | "/admin/dashboard" | "/admin/products" | "/cad
 type PageRoutes = never
 type LayoutRoutes = "/"
 type RedirectRoutes = never
-type RewriteRoutes = never
+type RewriteRoutes = "/api/[[...path]]"
 type Routes = AppRoutes | PageRoutes | LayoutRoutes | RedirectRoutes | RewriteRoutes
 
 
@@ -14,6 +14,7 @@ interface ParamMap {
   "/admin": {}
   "/admin/dashboard": {}
   "/admin/products": {}
+  "/api/[[...path]]": { "path"?: string[]; }
   "/cadastrar-produto": {}
   "/login": {}
   "/register": {}

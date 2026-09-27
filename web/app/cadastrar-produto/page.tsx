@@ -35,7 +35,7 @@ export default function CadastrarProdutoPage() {
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/products`);
+        const res = await fetch('/api/products');
         if (!res.ok) throw new Error('Failed to fetch products');
         const data: Product[] = await res.json();
         setProducts(data.map(normalizeProduct));
@@ -68,7 +68,7 @@ export default function CadastrarProdutoPage() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/products`, {
+      const res = await fetch('/api/products', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

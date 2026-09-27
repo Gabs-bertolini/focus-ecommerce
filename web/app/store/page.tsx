@@ -26,7 +26,7 @@ export default function StorePage() {
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/products`);
+        const res = await fetch('/api/products');
         if (!res.ok) throw new Error('Failed to fetch products');
         const data: Product[] = await res.json();
         setProducts(data.map(normalizeProduct));
