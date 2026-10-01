@@ -26,7 +26,7 @@ export class StockMovement {
   @Column()
   currentStock: number;
 
-  @Column({ nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   note: string | null;
 
   @CreateDateColumn({ type: 'timestamptz' })
