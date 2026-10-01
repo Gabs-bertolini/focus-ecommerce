@@ -44,6 +44,9 @@ export default function ClientNavigation() {
               <Link href="/admin/products" className="hover:text-red-200">
                 Gerenciar Produtos
               </Link>
+              <Link href="/admin/stock" className="hover:text-red-200">
+                Controle de Estoque
+              </Link>
             </>
           )}
           {role === 'user' && (

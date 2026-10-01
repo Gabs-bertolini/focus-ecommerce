@@ -44,6 +44,12 @@ export default function AdminDashboard() {
         >
           Manage Products
         </a>
+        <a
+          href="/admin/stock"
+          className="ml-3 inline-block bg-gray-700 text-white px-6 py-3 rounded hover:bg-gray-600 transition"
+        >
+          Controle de estoque
+        </a>
       </div>
     </div>
   );

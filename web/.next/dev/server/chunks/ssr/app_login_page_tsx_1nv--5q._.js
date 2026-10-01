@@ -24,7 +24,7 @@ function LoginPage() {
         setLoading(true);
         setError(null);
         try {
-            const res = await fetch(`${("TURBOPACK compile-time value", "http://localhost:3001") || 'http://localhost:3001'}/auth/login`, {
+            const res = await fetch('/api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
