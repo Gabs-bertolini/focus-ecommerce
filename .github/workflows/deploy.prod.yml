@@ -40,7 +40,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=sha,format=long,prefix=sha-
-            type=raw,value=dev
+            type=raw,value=prod
 
       - name: Build and push ${{ matrix.app }} image
         uses: docker/build-push-action@v6
@@ -49,4 +49,25 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    environment: production   
+    env:
+      IMAGE_TAG: sha-${{ github.sha }}
+    steps:
+      - name: Deploy to Oracle via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.ORACLE_HOST }}
+          username: ${{ secrets.ORACLE_USER }}
+          key: ${{ secrets.ORACLE_SSH_KEY }}
+          script: |
+            cd /home/ubuntu/projects-production/focus-ecommerce
+            sed -i "s/^WEB_TAG=.*/WEB_TAG=${{ env.IMAGE_TAG }}/" .env
+            sed -i "s/^API_TAG=.*/API_TAG=${{ env.IMAGE_TAG }}/" .env
+            docker compose pull
+            docker compose up -d
+            docker image prune -f
 
