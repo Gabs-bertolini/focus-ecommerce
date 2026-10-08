@@ -1,6 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useState, FormEvent } from 'react';
+import Link from 'next/link';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -50,49 +51,53 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white p-6">
-      <h1 className="text-3xl font-bold text-red-500 mb-6">Login</h1>
+    <div className="auth-shell">
+      <section className="auth-card">
+        <p className="page-eyebrow">Focus Ecommerce</p>
+        <h1>Login</h1>
+        <p>Acesse sua conta para continuar.</p>
 
-      {error && (
-        <div className="mb-4 p-3 bg-red-900/50 border border-red-600 rounded text-red-200">
-          {error}
-        </div>
-      )}
+        {error && (
+          <div className="mb-4 p-3 bg-red-900/50 border border-red-600 rounded text-red-200">
+            {error}
+          </div>
+        )}
 
-      <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-4">
-        <div>
-          <label className="block mb-2">Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded text-white focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-        </div>
-        <div>
-          <label className="block mb-2">Senha</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded text-white focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-        </div>
-        <button
-          type="submit"
-          disabled={loading}
-          className={`w-full bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition ${
-            loading ? 'opacity-50 cursor-not-allowed' : ''
-          }`}
-        >
-          {loading ? 'Entrando...' : 'Entrar'}
-        </button>
-        <p className="text-center text-sm text-gray-400">
-          Não tem conta? <a href="/register" className="text-red-400 hover:underline">Cadastre-se</a>
-        </p>
-      </form>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="login-email">Email</label>
+            <input
+              id="login-email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="login-password">Senha</label>
+            <input
+              id="login-password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition ${
+              loading ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+          >
+            {loading ? 'Entrando...' : 'Entrar'}
+          </button>
+          <p className="auth-footnote">
+            Não tem conta? <Link href="/register">Cadastre-se</Link>
+          </p>
+        </form>
+      </section>
     </div>
   );
 }

@@ -27,34 +27,34 @@ export default function ClientNavigation() {
   }
 
   return (
-    <nav className="bg-red-600 p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <Link href="/" className="text-xl font-bold text-white hover:underline">
-          Focus Ecommerce
+    <nav className="site-nav">
+      <div className="site-nav-inner">
+        <Link href="/" className="site-brand">
+          Focus <span>Ecommerce</span>
         </Link>
-        <div className="space-x-4">
-          <Link href="/" className="hover:text-red-200">
+        <div className="site-nav-links">
+          <Link href="/" aria-current={pathname === '/' ? 'page' : undefined} className="site-nav-link">
             Home
           </Link>
           {role === 'admin' && (
             <>
-              <Link href="/admin/dashboard" className="hover:text-red-200">
+              <Link href="/admin/dashboard" aria-current={pathname === '/admin/dashboard' ? 'page' : undefined} className="site-nav-link">
                 Admin Dashboard
               </Link>
-              <Link href="/admin/products" className="hover:text-red-200">
+              <Link href="/admin/products" aria-current={pathname === '/admin/products' ? 'page' : undefined} className="site-nav-link">
                 Gerenciar Produtos
               </Link>
-              <Link href="/admin/stock" className="hover:text-red-200">
+              <Link href="/admin/stock" aria-current={pathname === '/admin/stock' ? 'page' : undefined} className="site-nav-link">
                 Controle de Estoque
               </Link>
             </>
           )}
           {role === 'user' && (
             <>
-              <Link href="/store" className="hover:text-red-200">
+              <Link href="/store" aria-current={pathname === '/store' ? 'page' : undefined} className="site-nav-link">
                 Loja
               </Link>
-              <Link href="/store/cart" className="hover:text-red-200">
+              <Link href="/store/cart" aria-current={pathname === '/store/cart' ? 'page' : undefined} className="site-nav-link">
                 Carrinho
               </Link>
             </>

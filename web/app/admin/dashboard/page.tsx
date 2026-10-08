@@ -21,7 +21,8 @@ export default function AdminDashboard() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white p-6">
+    <div className="page-shell">
+      <p className="page-eyebrow">Visão geral</p>
       <h1 className="text-3xl font-bold text-red-500 mb-6">Admin Dashboard</h1>
       <div className="bg-gray-800 p-6 rounded w-full max-w-2xl space-y-4">
         <div className="flex justify-between">
@@ -40,13 +41,13 @@ export default function AdminDashboard() {
       <div className="mt-6">
         <a
           href="/admin/products"
-          className="bg-red-600 text-white px-6 py-3 rounded hover:bg-red-700 transition"
+          className="button-link button-link-primary"
         >
           Manage Products
         </a>
         <a
           href="/admin/stock"
-          className="ml-3 inline-block bg-gray-700 text-white px-6 py-3 rounded hover:bg-gray-600 transition"
+          className="button-link button-link-secondary ml-3"
         >
           Controle de estoque
         </a>
