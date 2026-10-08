@@ -195,7 +195,7 @@ export default function AdminStockPage() {
   }
 
   return (
-    <div className="mx-auto min-h-screen max-w-7xl bg-black px-4 py-8 text-white sm:px-6 lg:px-8">
+    <div className="page-shell mx-auto max-w-7xl text-white">
       <header className="mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-zinc-800 pb-6">
         <div>
           <p className="mb-2 text-sm font-semibold uppercase tracking-[0.16em] text-red-400">

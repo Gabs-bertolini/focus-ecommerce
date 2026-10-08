@@ -1,6 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import Link from 'next/link';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -63,64 +64,68 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white p-6">
-      <h1 className="text-3xl font-bold text-red-500 mb-6">Create Account</h1>
+    <div className="auth-shell">
+      <section className="auth-card">
+        <p className="page-eyebrow">Focus Ecommerce</p>
+        <h1>Create Account</h1>
+        <p>Crie sua conta para acompanhar e aproveitar a loja.</p>
 
-      {error && (
-        <div className="mb-4 p-3 bg-red-900/50 border border-red-600 rounded text-red-200">
-          {error}
-        </div>
-      )}
-      {success && (
-        <div className="mb-4 p-3 bg-green-900/50 border border-green-600 rounded text-green-200">
-          {success}
-        </div>
-      )}
+        {error && (
+          <div className="mb-4 p-3 bg-red-900/50 border border-red-600 rounded text-red-200">
+            {error}
+          </div>
+        )}
+        {success && (
+          <div className="mb-4 p-3 bg-green-900/50 border border-green-600 rounded text-green-200">
+            {success}
+          </div>
+        )}
 
-      <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4 bg-gray-800 p-6 rounded">
-        <div>
-          <label className="block mb-2">Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-        </div>
-        <div>
-          <label className="block mb-2">Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-        </div>
-        <div>
-          <label className="block mb-2">Confirm Password</label>
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-            className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-        </div>
-        <button
-          type="submit"
-          disabled={loading}
-          className={`w-full bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition ${
-            loading ? 'opacity-50 cursor-not-allowed' : ''
-          }`}
-        >
-          {loading ? 'Creating Account...' : 'Create Account'}
-        </button>
-        <p className="text-center text-sm text-gray-400 mt-4">
-          Already have an account? <a href="/login" className="text-red-400 hover:underline">Login here</a>
-        </p>
-      </form>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="register-email">Email</label>
+            <input
+              id="register-email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="register-password">Password</label>
+            <input
+              id="register-password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="register-confirm-password">Confirm Password</label>
+            <input
+              id="register-confirm-password"
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition ${
+              loading ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+          >
+            {loading ? 'Creating Account...' : 'Create Account'}
+          </button>
+          <p className="auth-footnote">
+            Already have an account? <Link href="/login">Login here</Link>
+          </p>
+        </form>
+      </section>
     </div>
   );
 }

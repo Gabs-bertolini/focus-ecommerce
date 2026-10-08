@@ -177,7 +177,8 @@ export default function AdminProductsPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white p-6">
+    <div className="page-shell">
+      <p className="page-eyebrow">Administração · Catálogo</p>
       <h1 className="text-3xl font-bold text-red-500 mb-6">Gerenciar Produtos</h1>
 
       {error && (
@@ -257,9 +258,9 @@ export default function AdminProductsPage() {
       {products.length > 0 && (
         <div className="mt-8 w-full max-w-4xl">
           <h2 className="text-2xl font-bold text-red-500 mb-4">Lista de Produtos</h2>
-          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="product-grid">
             {products.map(product => (
-              <div key={product.id} className="bg-gray-800 p-4 rounded">
+              <div key={product.id} className="product-card p-4">
                 <img
                   src={product.image}
                   alt={product.name}
