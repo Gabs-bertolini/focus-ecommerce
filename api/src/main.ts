@@ -2,12 +2,16 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { UsersService } from './users/users.service';
+import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.use(cookieParser());
+
   app.enableCors({
     origin: process.env.FRONTEND_URL,
+    credentials: true,
   });
 
   app.useGlobalPipes(
@@ -33,7 +37,9 @@ async function bootstrap() {
  * antes de escalar para múltiplas réplicas, evitando race condition
  * e mistura de responsabilidade no startup da aplicação.
  */
-async function seedAdminUser(app: Awaited<ReturnType<typeof NestFactory.create>>) {
+async function seedAdminUser(
+  app: Awaited<ReturnType<typeof NestFactory.create>>,
+) {
   const usersService = app.get(UsersService);
 
   const adminEmail = process.env.ADMIN_EMAIL;
@@ -64,4 +70,4 @@ async function seedAdminUser(app: Awaited<ReturnType<typeof NestFactory.create>>
   }
 }
 
-bootstrap();
+void bootstrap();

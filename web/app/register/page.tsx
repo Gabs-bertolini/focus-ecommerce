@@ -1,13 +1,14 @@
-'use client';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import Link from 'next/link';
+"use client";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import Link from "next/link";
+import GoogleAuthOption from "../google-auth-option";
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -20,44 +21,46 @@ export default function RegisterPage() {
     try {
       // Basic validation
       if (!email || !password || !confirmPassword) {
-        throw new Error('Please fill in all fields');
+        throw new Error("Please fill in all fields");
       }
       if (!/\S+@\S+\.\S+/.test(email)) {
-        throw new Error('Please enter a valid email address');
+        throw new Error("Please enter a valid email address");
       }
       if (password.length < 6) {
-        throw new Error('Password must be at least 6 characters long');
+        throw new Error("Password must be at least 6 characters long");
       }
       if (password !== confirmPassword) {
-        throw new Error('Passwords do not match');
+        throw new Error("Passwords do not match");
       }
 
-      const res = await fetch('/api/auth/register', {
-        method: 'POST',
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }), // isAdmin defaults to false
       });
 
       if (!res.ok) {
         const errorData = await res.json();
-        throw new Error(errorData.message || 'Registration failed');
+        throw new Error(errorData.message || "Registration failed");
       }
 
       await res.json(); // we don't need the data
-      setSuccess('Registration successful! Please login.');
+      setSuccess("Registration successful! Please login.");
       // Clear form
-      setEmail('');
-      setPassword('');
-      setConfirmPassword('');
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
       // Optionally redirect after a short delay
       setTimeout(() => {
-        router.push('/login');
+        router.push("/login");
       }, 1500);
     } catch (err) {
       console.error(err);
-      setError(err instanceof Error ? err.message : 'An unexpected error occurred');
+      setError(
+        err instanceof Error ? err.message : "An unexpected error occurred",
+      );
     } finally {
       setLoading(false);
     }
@@ -69,6 +72,8 @@ export default function RegisterPage() {
         <p className="page-eyebrow">Focus Ecommerce</p>
         <h1>Create Account</h1>
         <p>Crie sua conta para acompanhar e aproveitar a loja.</p>
+
+        <GoogleAuthOption />
 
         {error && (
           <div className="mb-4 p-3 bg-red-900/50 border border-red-600 rounded text-red-200">
@@ -116,10 +121,10 @@ export default function RegisterPage() {
             type="submit"
             disabled={loading}
             className={`w-full bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition ${
-              loading ? 'opacity-50 cursor-not-allowed' : ''
+              loading ? "opacity-50 cursor-not-allowed" : ""
             }`}
           >
-            {loading ? 'Creating Account...' : 'Create Account'}
+            {loading ? "Creating Account..." : "Create Account"}
           </button>
           <p className="auth-footnote">
             Already have an account? <Link href="/login">Login here</Link>

@@ -1,29 +1,71 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
-import { useEffect, useSyncExternalStore } from 'react'
-
-const emptySubscribe = () => () => {}
-const getServerRole = () => ''
-const getClientRole = () => localStorage.getItem('role') || ''
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useSyncExternalStore } from "react";
+import {
+  clearStoredRole,
+  getStoredRole,
+  subscribeToStoredRole,
+  updateStoredRole,
+} from "./role-storage";
 
 export default function ClientNavigation() {
-  const pathname = usePathname()
-  const router = useRouter()
-  const role = useSyncExternalStore(emptySubscribe, getClientRole, getServerRole)
+  const pathname = usePathname();
+  const router = useRouter();
+  const role = useSyncExternalStore(
+    subscribeToStoredRole,
+    getStoredRole,
+    () => "",
+  );
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
-
-    if (!token && pathname !== '/login') {
-      router.replace('/login')
-      return
+    if (pathname === "/login" || pathname === "/register") {
+      return;
     }
-  }, [pathname, router])
 
-  if (pathname === '/login') {
-    return null
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      return;
+    }
+
+    let cancelled = false;
+    fetch("/api/auth/session")
+      .then(async (response) => {
+        if (response.status === 401 || response.status === 403) {
+          router.replace("/login");
+          return null;
+        }
+        if (!response.ok) {
+          throw new Error(
+            `Session check failed with status ${response.status}`,
+          );
+        }
+        return (await response.json()) as { role: string };
+      })
+      .then((session) => {
+        if (cancelled || !session) return;
+        if (session.role !== "customer" && session.role !== "admin") {
+          throw new Error("Session has an invalid role");
+        }
+        const clientRole = session.role === "admin" ? "admin" : "user";
+        updateStoredRole(clientRole);
+      })
+      .catch((error: unknown) => {
+        if (cancelled) return;
+        console.error("Could not verify the current session", error);
+        clearStoredRole();
+        router.replace("/login");
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [pathname, router]);
+
+  if (pathname === "/login" || pathname === "/register") {
+    return null;
   }
 
   return (
@@ -33,28 +75,56 @@ export default function ClientNavigation() {
           Focus <span>Ecommerce</span>
         </Link>
         <div className="site-nav-links">
-          <Link href="/" aria-current={pathname === '/' ? 'page' : undefined} className="site-nav-link">
+          <Link
+            href="/"
+            aria-current={pathname === "/" ? "page" : undefined}
+            className="site-nav-link"
+          >
             Home
           </Link>
-          {role === 'admin' && (
+          {role === "admin" && (
             <>
-              <Link href="/admin/dashboard" aria-current={pathname === '/admin/dashboard' ? 'page' : undefined} className="site-nav-link">
+              <Link
+                href="/admin/dashboard"
+                aria-current={
+                  pathname === "/admin/dashboard" ? "page" : undefined
+                }
+                className="site-nav-link"
+              >
                 Admin Dashboard
               </Link>
-              <Link href="/admin/products" aria-current={pathname === '/admin/products' ? 'page' : undefined} className="site-nav-link">
+              <Link
+                href="/admin/products"
+                aria-current={
+                  pathname === "/admin/products" ? "page" : undefined
+                }
+                className="site-nav-link"
+              >
                 Gerenciar Produtos
               </Link>
-              <Link href="/admin/stock" aria-current={pathname === '/admin/stock' ? 'page' : undefined} className="site-nav-link">
+              <Link
+                href="/admin/stock"
+                aria-current={pathname === "/admin/stock" ? "page" : undefined}
+                className="site-nav-link"
+              >
                 Controle de Estoque
               </Link>
             </>
           )}
-          {role === 'user' && (
+          {role === "user" && (
             <>
-              <Link href="/store" aria-current={pathname === '/store' ? 'page' : undefined} className="site-nav-link">
+              <Link
+                href="/store"
+                aria-current={pathname === "/store" ? "page" : undefined}
+                className="site-nav-link"
+              >
                 Loja
               </Link>
-              <Link href="/store/cart" aria-current={pathname === '/store/cart' ? 'page' : undefined} className="site-nav-link">
+              <Link
+                href="/store/cart"
+                aria-current={pathname === "/store/cart" ? "page" : undefined}
+                className="site-nav-link"
+              >
                 Carrinho
               </Link>
             </>
@@ -62,5 +132,5 @@ export default function ClientNavigation() {
         </div>
       </div>
     </nav>
-  )
+  );
 }
