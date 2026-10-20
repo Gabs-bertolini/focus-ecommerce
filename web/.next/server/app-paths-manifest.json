@@ -4,6 +4,7 @@
   "/admin/dashboard/page": "app/admin/dashboard/page.js",
   "/admin/page": "app/admin/page.js",
   "/admin/products/page": "app/admin/products/page.js",
+  "/admin/stock/page": "app/admin/stock/page.js",
   "/cadastrar-produto/page": "app/cadastrar-produto/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
   "/login/page": "app/login/page.js",

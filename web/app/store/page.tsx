@@ -56,8 +56,10 @@ export default function StorePage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white p-6">
+    <div className="page-shell">
+      <p className="page-eyebrow">Focus Ecommerce</p>
       <h1 className="text-3xl font-bold text-red-500 mb-6">Loja</h1>
+      <p className="page-description">Produtos selecionados para você.</p>
 
       {error && (
         <div className="mb-4 p-3 bg-red-900/50 border border-red-600 rounded text-red-200">
@@ -72,9 +74,9 @@ export default function StorePage() {
           {products.length === 0 ? (
             <p>Nenhum produto disponível.</p>
           ) : (
-            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="product-grid">
               {products.map(product => (
-                <div key={product.id} className="bg-gray-800 p-4 rounded">
+                <div key={product.id} className="product-card p-4">
                   <img
                     src={product.image}
                     alt={product.name}

@@ -6,6 +6,9 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
 import { AuthController } from './auth.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { GoogleStrategy } from './google/google.strategy';
+import { GoogleOAuthStateService } from './google/google-oauth-state.service';
+import { GoogleAuthGuard, GoogleCallbackGuard } from './google/google-auth.guard';
 
 @Module({
   imports: [
@@ -24,7 +27,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       }),
     }),
   ],
-  providers: [AuthService, JwtStrategy],
+  providers: [
+    AuthService,
+    JwtStrategy,
+    GoogleStrategy,
+    GoogleOAuthStateService,
+    GoogleAuthGuard,
+    GoogleCallbackGuard,
+  ],
   exports: [AuthService],
   controllers: [AuthController],
 })

@@ -45,7 +45,8 @@ export default function CartPage() {
   const total: number = cartItems.reduce((sum, item) => sum + item.price, 0);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white p-6">
+    <div className="page-shell">
+      <p className="page-eyebrow">Sua compra</p>
       <h1 className="text-3xl font-bold text-red-500 mb-6">Carrinho</h1>
 
       {error && (
@@ -55,10 +56,13 @@ export default function CartPage() {
       )}
 
       {cartItems.length === 0 ? (
-        <p className="text-lg">Seu carrinho está vazio.</p>
+        <div className="empty-state">
+          <h2>Seu carrinho está vazio.</h2>
+          <p>Quando encontrar algo que goste, adicione ao carrinho para continuar.</p>
+        </div>
       ) : (
         <>
-          <div className="w-full max-w-4xl">
+          <div className="table-wrap">
             <table className="w-full border-collapse">
               <thead>
                 <tr className="bg-gray-800">
@@ -106,7 +110,7 @@ export default function CartPage() {
               </tfoot>
             </table>
           </div>
-          <div className="mt-6 flex justify-between space-x-4">
+          <div className="action-row mt-6 flex justify-between space-x-4">
             <button
               onClick={clearCart}
               className="bg-gray-600 text-white px-6 py-3 rounded hover:bg-gray-500 transition"

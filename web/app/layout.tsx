@@ -14,9 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className="bg-black text-white min-h-screen">
+      <body>
         <ClientNavigation />
-        <main className="container mx-auto p-4">{children}</main>
+        <main className="site-main">{children}</main>
       </body>
     </html>
   );

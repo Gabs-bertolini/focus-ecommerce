@@ -16,6 +16,7 @@ import { JwtAuthGuard } from '../auth/jwt/jwt.guard';
 import { RolesGuard } from '../roles/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Public } from '../auth/decorators/public.decorator';
+import { CreateStockMovementDto } from './dto/create-stock-movement.dto';
 
 @Controller('products')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -34,10 +35,25 @@ export class ProductsController {
     return this.productsService.findAll();
   }
 
+  @Get('stock-movements')
+  @Roles('admin')
+  findStockMovements() {
+    return this.productsService.findStockMovements();
+  }
+
   @Get(':id')
   @Public()
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.productsService.findOne(id);
+  }
+
+  @Post(':id/stock-movements')
+  @Roles('admin')
+  createStockMovement(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() createStockMovementDto: CreateStockMovementDto,
+  ) {
+    return this.productsService.createStockMovement(id, createStockMovementDto);
   }
 
   @Patch(':id')
