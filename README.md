@@ -11,6 +11,7 @@ The project is organized as a monorepo, with separate application folders for th
 - Database: PostgreSQL
 - ORM: TypeORM
 - Authentication: JWT via Passport and Nest JWT
+- Customer social sign-in: Google OAuth 2.0
 - Testing: Jest (API), Vitest (frontend)
 - Containerization: Docker and Docker Compose
 - CI/CD: GitHub Actions
@@ -41,7 +42,7 @@ focus-ecommerce/
 
 - User registration and login
 - JWT authentication
-- Role-based authorization (`admin` and `user`)
+- Role-based authorization (`admin` and `customer`; legacy web role storage remains `user`)
 - Product CRUD operations
 - Product stock management
 - Stock movement records for entries, adjustments, and withdrawals
@@ -139,9 +140,51 @@ POSTGRES_DB=ecommerce
 JWT_SECRET=change-me-to-a-long-random-string
 JWT_EXPIRES_IN=3600
 FRONTEND_URL=http://localhost:46464
+GOOGLE_CLIENT_ID=your-google-oauth-client-id
+GOOGLE_CLIENT_SECRET=your-google-oauth-client-secret
+GOOGLE_CALLBACK_URL=http://localhost:46464/api/auth/google/callback
 ADMIN_EMAIL=admin@example.com
 ADMIN_PASSWORD=change-me
 ```
+
+Register the exact `GOOGLE_CALLBACK_URL` value as an authorized redirect URI
+for the Google OAuth 2.0 Web application. For a standalone local Next.js server
+on port `3000`, use `FRONTEND_URL=http://localhost:3000` and
+`GOOGLE_CALLBACK_URL=http://localhost:3000/api/auth/google/callback`. The Google
+client secret is read only by the API and must not use a `NEXT_PUBLIC_` prefix.
+
+Google sign-in is customer-only. It requires a verified Google email, links an
+existing customer by email, and rejects existing admin accounts. The API places
+its JWT in an HttpOnly, SameSite=Lax cookie (Secure in production). Password
+login continues to return `access_token` in the response and remains compatible
+with existing Bearer/localStorage clients.
+
+### Database migrations
+
+The API currently synchronizes the schema automatically outside production;
+production has synchronization disabled. Migration commands run from `api/`:
+
+```bash
+npm run migration:run
+npm run migration:revert
+npm run migration:generate -- src/database/migrations/DescribeChange
+```
+
+The initial baseline migration creates current tables only when missing, so it
+can establish migration history on databases previously managed by
+`synchronize`. The following Google-account migration adds `googleId` and makes
+password hashes nullable. The baseline rollback intentionally does not drop
+existing tables. Reverting the Google-account migration refuses to make
+passwords non-null while Google-only accounts remain.
+
+For deployment, take a database backup and run `npm run migration:run` once as a
+release step against the production database before starting/replacing API
+instances. For the current Compose deployment, this can be an operator-run
+one-off command such as `docker compose run --rm api npm run migration:run`.
+Configure `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, and `GOOGLE_CALLBACK_URL`
+directly in the API runtime environment as part of deployment: the current
+Compose file does not forward these new variables from the root `.env`. CI/CD
+and Compose are intentionally unchanged.
 
 ## Running the Project Locally
 

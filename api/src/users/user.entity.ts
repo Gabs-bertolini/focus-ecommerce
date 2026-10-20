@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, Unique } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, Unique, Index } from 'typeorm';
 
 @Entity()
 @Unique(['email'])
@@ -9,9 +9,13 @@ export class User {
   @Column()
   email: string;
 
-  @Column()
-  password: string;
+  @Column({ type: 'varchar', nullable: true })
+  password: string | null;
 
   @Column({ default: false })
   isAdmin: boolean;
+
+  @Index('UQ_user_googleId', { unique: true })
+  @Column({ type: 'varchar', nullable: true })
+  googleId: string | null;
 }

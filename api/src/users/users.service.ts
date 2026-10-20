@@ -20,7 +20,15 @@ export class UsersService {
     return this.usersRepository.findOneBy({ id });
   }
 
-  async create(email: string, password: string, isAdmin: boolean = false): Promise<User> {
+  async findByGoogleId(googleId: string): Promise<User | null> {
+    return this.usersRepository.findOneBy({ googleId });
+  }
+
+  async create(
+    email: string,
+    password: string,
+    isAdmin: boolean = false,
+  ): Promise<User> {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = this.usersRepository.create({
       email,
@@ -28,6 +36,21 @@ export class UsersService {
       isAdmin,
     });
     return this.usersRepository.save(user);
+  }
+
+  async createGoogleCustomer(email: string, googleId: string): Promise<User> {
+    const user = this.usersRepository.create({
+      email,
+      password: null,
+      isAdmin: false,
+      googleId,
+    });
+    return this.usersRepository.save(user);
+  }
+
+  async linkGoogleAccount(id: number, googleId: string): Promise<User> {
+    await this.usersRepository.update(id, { googleId });
+    return this.usersRepository.findOneByOrFail({ id });
   }
 
   async setAdminRole(id: number, isAdmin: boolean): Promise<User> {
@@ -40,6 +63,10 @@ export class UsersService {
     if (!user) {
       throw new UnauthorizedException('Invalid email or password');
     }
+    if (!user.password) {
+      throw new UnauthorizedException('Invalid email or password');
+    }
+
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid email or password');
