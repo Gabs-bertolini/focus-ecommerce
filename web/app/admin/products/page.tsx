@@ -7,6 +7,7 @@ type Product = {
   id: number;
   name: string;
   price: number;
+  cost: number;
   stock: number;
   image: string;
 };
@@ -17,6 +18,7 @@ function normalizeProduct(product: Product): Product {
   return {
     ...product,
     price: Number(product.price),
+    cost: Number(product.cost ?? 0),
     stock: Number(product.stock),
   };
 }
@@ -27,6 +29,7 @@ export default function AdminProductsPage() {
   const [form, setForm] = useState<CreateProductDTO>({
     name: '',
     price: 0,
+    cost: 0,
     stock: 0,
     image: '',
   });
@@ -70,7 +73,13 @@ export default function AdminProductsPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Basic validation
-    if (!form.name || form.price <= 0 || form.stock < 0 || !form.image) {
+    if (
+      !form.name ||
+      form.price <= 0 ||
+      form.cost < 0 ||
+      form.stock < 0 ||
+      !form.image
+    ) {
       alert('Preencha todos os campos corretamente');
       return;
     }
@@ -117,7 +126,7 @@ export default function AdminProductsPage() {
         setProducts(prev => [...prev, savedProduct]);
       }
       // Reset form
-      setForm({ name: '', price: 0, stock: 0, image: '' });
+      setForm({ name: '', price: 0, cost: 0, stock: 0, image: '' });
     } catch (err) {
       console.error(err);
       setError('Could not save product');
@@ -171,6 +180,7 @@ export default function AdminProductsPage() {
     setForm({
       name: product.name,
       price: product.price,
+      cost: product.cost,
       stock: product.stock,
       image: product.image,
     });
@@ -179,7 +189,9 @@ export default function AdminProductsPage() {
   return (
     <div className="page-shell">
       <p className="page-eyebrow">Administração · Catálogo</p>
-      <h1 className="text-3xl font-bold text-red-500 mb-6">Gerenciar Produtos</h1>
+      <h1 className="text-3xl font-bold text-red-500 mb-6">
+        Gerenciar Produtos
+      </h1>
 
       {error && (
         <div className="mb-4 p-3 bg-red-900/50 border border-red-600 rounded text-red-200">
@@ -187,7 +199,10 @@ export default function AdminProductsPage() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4 bg-gray-800 p-6 rounded">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-md space-y-4 bg-gray-800 p-6 rounded"
+      >
         <div>
           <label className="block mb-2">Nome do produto</label>
           <input
@@ -205,6 +220,19 @@ export default function AdminProductsPage() {
             type="number"
             step="0.01"
             value={form.price}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:ring-2 focus:ring-red-500"
+          />
+        </div>
+        <div>
+          <label className="block mb-2">Custo unitário (R$)</label>
+          <input
+            name="cost"
+            type="number"
+            min="0"
+            step="0.01"
+            value={form.cost}
             onChange={handleChange}
             required
             className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:ring-2 focus:ring-red-500"
@@ -246,7 +274,7 @@ export default function AdminProductsPage() {
             type="button"
             onClick={() => {
               setEditingId(null);
-              setForm({ name: '', price: 0, stock: 0, image: '' });
+              setForm({ name: '', price: 0, cost: 0, stock: 0, image: '' });
             }}
             className="mt-2 w-full bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-500 transition"
           >
@@ -257,7 +285,9 @@ export default function AdminProductsPage() {
 
       {products.length > 0 && (
         <div className="mt-8 w-full max-w-4xl">
-          <h2 className="text-2xl font-bold text-red-500 mb-4">Lista de Produtos</h2>
+          <h2 className="text-2xl font-bold text-red-500 mb-4">
+            Lista de Produtos
+          </h2>
           <div className="product-grid">
             {products.map(product => (
               <div key={product.id} className="product-card p-4">
@@ -267,7 +297,12 @@ export default function AdminProductsPage() {
                   className="w-full h-48 object-cover mb-4 rounded"
                 />
                 <h3 className="text-lg font-bold mb-2">{product.name}</h3>
-                <p className="text-gray-300 mb-1">Preço: R$ {product.price.toFixed(2)}</p>
+                <p className="text-gray-300 mb-1">
+                  Preço: R$ {product.price.toFixed(2)}
+                </p>
+                <p className="text-gray-300 mb-1">
+                  Custo: R$ {product.cost.toFixed(2)}
+                </p>
                 <p className="text-gray-300 mb-1">Estoque: {product.stock}</p>
                 <div className="mt-4 space-x-2">
                   <button

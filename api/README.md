@@ -57,6 +57,18 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Sales and dashboard
+
+Orders are created from the authenticated customer checkout at `POST /sales`.
+The API uses current product prices and stock, records the unit cost snapshot,
+and updates stock and its movement history in the same transaction. The
+administrator dashboard reads its 30-day indicators from `GET /sales/dashboard`.
+
+Set each product's unit cost in the admin product form so cost and gross profit
+indicators reflect actual product costs. Existing products default to a cost of
+zero. Apply the sales tracking schema with `npm run migration:run` before
+deploying this feature to a database with synchronization disabled.
+
 ## Deployment
 
 When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
