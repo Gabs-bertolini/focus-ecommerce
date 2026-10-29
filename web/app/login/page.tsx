@@ -36,7 +36,7 @@ export default function LoginPage() {
       const isAdmin = payload.isAdmin as boolean;
 
       localStorage.setItem("token", access_token);
-      updateStoredRole(isAdmin ? "admin" : "user");
+      updateStoredRole(isAdmin ? "admin" : "customer");
 
       // Redirect based on role
       if (isAdmin) {

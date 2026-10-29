@@ -19,7 +19,7 @@ export class SalesController {
   constructor(private readonly salesService: SalesService) {}
 
   @Post()
-  @Roles('user')
+  @Roles('customer')
   create(
     @Body() createSaleDto: CreateSaleDto,
     @Req() request: AuthenticatedRequest,

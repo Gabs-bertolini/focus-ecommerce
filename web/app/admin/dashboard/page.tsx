@@ -70,7 +70,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     const role = localStorage.getItem("role");
     if (role !== "admin") {
-      router.replace(role === "user" ? "/store" : "/login");
+      router.replace(role === "customer" ? "/store" : "/login");
       return;
     }
 
