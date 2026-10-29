@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { ProductsModule } from './products/products.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { SalesModule } from './sales/sales.module';
 
 @Module({
   imports: [
@@ -23,13 +24,14 @@ import { AuthModule } from './auth/auth.module';
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
         migrations: [__dirname + '/database/migrations/*{.ts,.js}'],
         migrationsTableName: 'migrations',
-        migrationsRun: false,
-        synchronize: configService.get<string>('NODE_ENV') !== 'production',
+        migrationsRun: configService.get<string>('NODE_ENV') !== 'production',
+        synchronize: false,
       }),
     }),
     ProductsModule,
     UsersModule,
     AuthModule,
+    SalesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

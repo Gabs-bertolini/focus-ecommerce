@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { Product } from './product.entity';
@@ -31,11 +35,17 @@ export class ProductsService {
     });
   }
 
-  create(createProductDto: Omit<Product, 'id'>): Promise<Product> {
+  create(
+    createProductDto: Omit<Product, 'id' | 'cost'> &
+      Partial<Pick<Product, 'cost'>>,
+  ): Promise<Product> {
     return this.dataSource.transaction(async (manager) => {
       const productsRepository = manager.getRepository(Product);
       const product = await productsRepository.save(
-        productsRepository.create(createProductDto),
+        productsRepository.create({
+          ...createProductDto,
+          cost: createProductDto.cost ?? 0,
+        }),
       );
 
       if (product.stock > 0) {
@@ -108,7 +118,10 @@ export class ProductsService {
         throw new NotFoundException(`Product #${id} not found`);
       }
 
-      if (movementDto.type !== StockMovementType.ADJUSTMENT && movementDto.quantity < 1) {
+      if (
+        movementDto.type !== StockMovementType.ADJUSTMENT &&
+        movementDto.quantity < 1
+      ) {
         throw new BadRequestException('A quantidade deve ser maior que zero');
       }
 
@@ -124,7 +137,9 @@ export class ProductsService {
         throw new BadRequestException('Estoque insuficiente para esta baixa');
       }
       if (currentStock === previousStock) {
-        throw new BadRequestException('O novo estoque deve ser diferente do atual');
+        throw new BadRequestException(
+          'O novo estoque deve ser diferente do atual',
+        );
       }
 
       product.stock = currentStock;

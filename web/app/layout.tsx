@@ -15,8 +15,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body>
-        <ClientNavigation />
-        <main className="site-main">{children}</main>
+        <ClientNavigation>{children}</ClientNavigation>
       </body>
     </html>
   );
