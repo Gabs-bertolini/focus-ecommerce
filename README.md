@@ -117,7 +117,7 @@ These images are then used by the Docker Compose deployment stack.
 
 ## Container and Deployment Setup
 
-The root `docker-compose.yml` defines the local deployment environment:
+The root `docker-compose.yml` builds and runs the local development environment:
 
 - `web`: frontend container
 - `api`: backend container
@@ -131,27 +131,22 @@ The root `docker-compose.yml` defines the local deployment environment:
 
 ### Environment variables
 
-Create a `.env` file from `.env.example` and fill in the required values:
+From the project root, start the full stack with:
 
-```env
-POSTGRES_USERNAME=postgres
-POSTGRES_PASSWORD=change-me
-POSTGRES_DB=ecommerce
-JWT_SECRET=change-me-to-a-long-random-string
-JWT_EXPIRES_IN=3600
-FRONTEND_URL=http://localhost:46464
-GOOGLE_CLIENT_ID=your-google-oauth-client-id
-GOOGLE_CLIENT_SECRET=your-google-oauth-client-secret
-GOOGLE_CALLBACK_URL=http://localhost:46464/api/auth/google/callback
-ADMIN_EMAIL=admin@example.com
-ADMIN_PASSWORD=change-me
+```bash
+docker compose up --build
 ```
 
-Register the exact `GOOGLE_CALLBACK_URL` value as an authorized redirect URI
-for the Google OAuth 2.0 Web application. For a standalone local Next.js server
-on port `3000`, use `FRONTEND_URL=http://localhost:3000` and
-`GOOGLE_CALLBACK_URL=http://localhost:3000/api/auth/google/callback`. The Google
-client secret is read only by the API and must not use a `NEXT_PUBLIC_` prefix.
+The development Compose file has local-only defaults, so copying `.env.example`
+is optional. The default administrator login is `admin@example.com` with
+password `change-me`; change these values before exposing the app beyond a
+trusted local environment. Optional `.env` values can override the database,
+JWT, admin, and OAuth settings.
+
+Google sign-in requires real `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`
+credentials. Register the configured `GOOGLE_CALLBACK_URL` as an authorized
+redirect URI in Google Cloud Console. The Google client secret is read only by
+the API and must not use a `NEXT_PUBLIC_` prefix.
 
 Google sign-in is customer-only. It requires a verified Google email, links an
 existing customer by email, and rejects existing admin accounts. The API places
@@ -161,8 +156,11 @@ with existing Bearer/localStorage clients.
 
 ### Database migrations
 
-The API currently synchronizes the schema automatically outside production;
-production has synchronization disabled. Migration commands run from `api/`:
+In development, the API automatically applies pending migrations at startup.
+Schema synchronization is disabled; migrations are the source of truth.
+Production keeps automatic migration execution disabled to avoid multiple API
+instances racing to update the schema. Migration commands run from `api/` when
+they need to be managed manually:
 
 ```bash
 npm run migration:run
@@ -177,14 +175,24 @@ password hashes nullable. The baseline rollback intentionally does not drop
 existing tables. Reverting the Google-account migration refuses to make
 passwords non-null while Google-only accounts remain.
 
-For deployment, take a database backup and run `npm run migration:run` once as a
-release step against the production database before starting/replacing API
-instances. For the current Compose deployment, this can be an operator-run
-one-off command such as `docker compose run --rm api npm run migration:run`.
-Configure `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, and `GOOGLE_CALLBACK_URL`
-directly in the API runtime environment as part of deployment: the current
-Compose file does not forward these new variables from the root `.env`. CI/CD
-and Compose are intentionally unchanged.
+For production deployment, take a database backup and run migrations as a
+release step before starting/replacing API instances:
+
+```bash
+cd api
+npm run migration:run
+```
+
+The development Compose stack applies migrations automatically. To run a
+migration manually inside Compose, use:
+
+```bash
+docker compose run --rm api npm run migration:run
+```
+
+Inside Compose, the database hostname is `postgres`. A migration command run
+directly on the host needs a PostgreSQL server reachable at the configured
+`POSTGRES_HOST` (usually `localhost`).
 
 ## Running the Project Locally
 
@@ -198,7 +206,9 @@ cp .env.example .env
 docker compose up --build
 ```
 
-This will start the frontend, backend, and PostgreSQL services together.
+This builds and starts the frontend, backend, and PostgreSQL services together.
+The API waits for PostgreSQL to become healthy, applies pending migrations,
+and then starts serving requests.
 
 ### Option 2: Running API and Web separately
 

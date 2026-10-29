@@ -124,11 +124,11 @@ export class SalesService {
         .select('DATE(sale."createdAt")', 'date')
         .addSelect('COUNT(DISTINCT sale.id)', 'orders')
         .addSelect(
-          'COALESCE(SUM(saleItem.quantity * saleItem."unitPrice"), 0)',
+          'COALESCE(SUM("saleItem"."quantity" * "saleItem"."unitPrice"), 0)',
           'revenue',
         )
         .addSelect(
-          'COALESCE(SUM(saleItem.quantity * saleItem."unitCost"), 0)',
+          'COALESCE(SUM("saleItem"."quantity" * "saleItem"."unitCost"), 0)',
           'costs',
         )
         .where('sale."createdAt" >= :startDate', { startDate })

@@ -66,8 +66,7 @@ administrator dashboard reads its 30-day indicators from `GET /sales/dashboard`.
 
 Set each product's unit cost in the admin product form so cost and gross profit
 indicators reflect actual product costs. Existing products default to a cost of
-zero. Apply the sales tracking schema with `npm run migration:run` before
-deploying this feature to a database with synchronization disabled.
+zero. Pending schema migrations run automatically when the API starts.
 
 ## Deployment
 

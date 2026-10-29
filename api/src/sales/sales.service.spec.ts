@@ -125,4 +125,57 @@ describe('SalesService', () => {
     expect(saleRepository.save).not.toHaveBeenCalled();
     expect(product.stock).toBe(1);
   });
+
+  it('quotes sale item aliases in PostgreSQL dashboard aggregates', async () => {
+    const selections: string[] = [];
+    const dailyQuery = {
+      innerJoin: jest.fn().mockReturnThis(),
+      select: jest.fn().mockReturnThis(),
+      addSelect: jest.fn((expression: string) => {
+        selections.push(expression);
+        return dailyQuery;
+      }),
+      where: jest.fn().mockReturnThis(),
+      groupBy: jest.fn().mockReturnThis(),
+      orderBy: jest.fn().mockReturnThis(),
+      getRawMany: jest.fn().mockResolvedValue([]),
+    };
+    const productQuery = {
+      select: jest.fn().mockReturnThis(),
+      addSelect: jest.fn().mockReturnThis(),
+      getRawOne: jest.fn().mockResolvedValue({ count: '0', units: '0' }),
+    };
+    const salesRepository = {
+      find: jest.fn().mockResolvedValue([]),
+    };
+    const saleItemsRepository = {
+      createQueryBuilder: jest.fn().mockReturnValue(dailyQuery),
+      find: jest.fn(),
+    };
+    const productsRepository = {
+      createQueryBuilder: jest.fn().mockReturnValue(productQuery),
+    };
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [
+        SalesService,
+        { provide: getRepositoryToken(Sale), useValue: salesRepository },
+        { provide: getRepositoryToken(Product), useValue: productsRepository },
+        {
+          provide: getRepositoryToken(SaleItem),
+          useValue: saleItemsRepository,
+        },
+        { provide: DataSource, useValue: dataSource },
+      ],
+    }).compile();
+    const dashboardService = module.get<SalesService>(SalesService);
+
+    await dashboardService.getDashboard();
+
+    expect(selections).toContain(
+      'COALESCE(SUM("saleItem"."quantity" * "saleItem"."unitPrice"), 0)',
+    );
+    expect(selections).toContain(
+      'COALESCE(SUM("saleItem"."quantity" * "saleItem"."unitCost"), 0)',
+    );
+  });
 });
